@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>FF Prediction</title></head>
+<body>
+  <nav>
+    <a href="/index">Home</a> |
+    <a href="/prediction">FF Prediction</a>
+  </nav>
+  <h3>Fill in the data</h3>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <p>{{ form.longitude.label }}: {{ form.longitude() }}</p>
+    <p>{{ form.latitude.label }}: {{ form.latitude() }}</p>
+    <p>{{ form.month.label }}: {{ form.month() }}</p>
+    <p>{{ form.day.label }}: {{ form.day() }}</p>
+    <p>{{ form.avg_temp.label }}: {{ form.avg_temp() }}</p>
+    <p>{{ form.max_temp.label }}: {{ form.max_temp() }}</p>
+    <p>{{ form.max_wind_speed.label }}: {{ form.max_wind_speed() }}</p>
+    <p>{{ form.avg_wind.label }}: {{ form.avg_wind() }}</p>
+    {{ form.submit() }}
+  </form>
+  <p>2021810070최성찬</p>
+</body>
+</html>
