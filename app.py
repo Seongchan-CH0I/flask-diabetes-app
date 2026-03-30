@@ -1,4 +1,7 @@
 # sanbul-pwa-flask.py
+import os
+os.environ['TF_NUM_INTEROP_THREADS'] = '1'
+os.environ['TF_NUM_INTRAOP_THREADS'] = '1'
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -47,7 +50,7 @@ dummy_data = pd.DataFrame(
     columns=['longitude','latitude','avg_temp','max_temp','max_wind_speed','avg_wind','month','day']
 )
 dummy_prepared = full_pipeline.transform(dummy_data)
-model.predict(dummy_prepared) # 이 과정에서 시간이 걸리며 RAM이 초기화됩니다.
+model(dummy_prepared, training=False) # 직접 호출 방식으로 변경하여 메모리와 속도 최적화
 print("모델 웜업 완료!")
 
 # ── Flask 앱 설정 ──
@@ -92,7 +95,7 @@ def lab():
 )
 
         input_prepared = full_pipeline.transform(input_data)
-        prediction     = model.predict(input_prepared)
+        prediction     = model(input_prepared, training=False)
         result         = np.expm1(prediction[0][0])
 
         return render_template('result.html', result=round(float(result), 2))
