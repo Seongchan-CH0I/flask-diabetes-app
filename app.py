@@ -40,6 +40,16 @@ full_pipeline.fit(fires_tr)
 # ── 모델 로드 ──
 model = keras.models.load_model('fires_model.keras')
 
+# --- Dummy Predict (웜업: 첫 연결 전 가짜 데이터로 한 번 구동) ---
+print("모델 웜업 시작...")
+dummy_data = pd.DataFrame(
+    [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, '01-Jan', '00-sun']],
+    columns=['longitude','latitude','avg_temp','max_temp','max_wind_speed','avg_wind','month','day']
+)
+dummy_prepared = full_pipeline.transform(dummy_data)
+model.predict(dummy_prepared) # 이 과정에서 시간이 걸리며 RAM이 초기화됩니다.
+print("모델 웜업 완료!")
+
 # ── Flask 앱 설정 ──
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
